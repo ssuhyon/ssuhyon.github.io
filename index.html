@@ -1,0 +1,44 @@
+---
+layout: home  # 이 페이지에서 사용할 레이아웃 설정 (home 레이아웃 사용)
+title: "SUHYEON BLOG"  # 페이지 제목 설정
+---
+
+<div class="container">
+    <section class="post-list">
+        <h3 class="list-title">전체 글 목록</h3> <!-- 전체 글 목록 섹션 제목 -->
+        <ul>
+            {% for post in paginator.posts %}
+            <li>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                - {{ post.date | date: "%Y-%m-%d" }}
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <!-- 페이지 네비게이션 -->
+        <div class="pagination">
+            <!-- 이전 페이지 -->
+            {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}">&lt;</a>
+            {% else %}
+            <span class="disabled">&lt;</span>
+            {% endif %}
+        
+            <!-- 페이지 번호 -->
+            {% for page in (1..paginator.total_pages) %}
+                {% if page == paginator.page %}
+                <span class="current">{{ page }}</span>
+                {% else %}
+                <a href="{{ site.url }}{{ site.baseurl }}{% if page > 1 %}/page{{ page }}{% endif %}">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+        
+            <!-- 다음 페이지 -->
+            {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | prepend: site.baseurl }}">&gt;</a>
+            {% else %}
+            <span class="disabled">&gt;</span>
+            {% endif %}
+        </div>
+    </section>
+</div>
